@@ -1,0 +1,140 @@
+<template>
+    <div>
+        <tableHead title="数据列表" ico="md-list">
+            <template v-slot:right>
+                <Button @click="addList">添加</Button>
+                <Select v-model="seleValue" style="width:100px">
+                    <Option v-for="item in options" :value="item" :key="item">{{ item }}</Option>
+                </Select>
+            </template>
+
+            <template v-slot:center>
+                <Table border :columns="columns1" :data="data1">
+                    <template slot-scope="{ row }" slot="number">
+                        <router-link :to="{name:'memmange',params:{depa_id:row.id}}">{{ row.department_number }}</router-link>
+                    </template>
+                    <template slot-scope="{ row }" slot="valid">
+                       <i-switch v-model="row.is_valid">
+                            <Icon type="md-checkmark" slot="open"></Icon>
+                            <Icon type="md-close" slot="close"></Icon>
+                        </i-switch>
+                    </template>
+                    <template slot-scope="{ row }" slot="action">
+                        <router-link :to="{name:'permSeting',params:{depa_id:row.id}}">权限设置</router-link>
+                        <a @click="edit">编辑</a>
+                        <a @click="delet">删除</a>
+                    </template>
+                </Table>
+            </template>
+        </tableHead>
+            <Modal
+                v-model="showDig"
+                title="添加部门"
+                @on-ok="ok"
+                @on-cancel="cancel">
+                 <Form ref="formValidate" @submit.native.prevent :model="formValidate" :rules="ruleValidate" :label-width="80">
+                        <FormItem label="部门名称" prop="name">
+                            <Input v-model="formValidate.name" placeholder=""/>
+                        </FormItem>
+                        <FormItem label="职能描述" prop="desc">
+                            <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 4,maxRows: 6}" placeholder="请输入内容"/>
+                        </FormItem>
+                 </Form>
+            </Modal>
+    </div>
+</template>
+
+<script>
+import tableHead from '../../components/table-head'
+    export default {
+        data (){
+            return {
+                seleValue:'',
+                showDig:false,
+                options:[10,15,20,50],
+                formValidate:{
+                    name:'',
+                    desc:''
+                },
+                ruleValidate:{
+                    name:[
+                        { required: true, message: '请输入部门名称', trigger: 'blur' }
+                    ],
+                    desc:[
+                        { required: true, message: '请输入内容', trigger: 'blur' }
+                    ]
+                },
+                columns1: [
+                    {
+                        title: '部门名称',
+                        key: 'department_name'
+                    },
+                    {
+                        title: '职能描述',
+                        key: 'department_description'
+                    },
+                    {
+                        title: '成员数量',
+                        key: 'department_number',
+                        slot:'number'
+                    },
+                    {
+                        title: '添加时间',
+                        key: 'created_time'
+                    },
+                    {
+                        title: '是否启用',
+                        key: 'is_valid',
+                        slot:'valid'
+                    },
+                    {
+                        title: '操作',
+                        key: 'actions',
+                        slot:'action'
+                    }
+                ],
+                data1: [
+                    {
+                        id:'6545',
+                        department_name: 'John Brown',
+                        department_description: 'sdfdsfdsfds',
+                        department_number: 10,
+                        created_time: '2016-10-03',
+                        is_valid:1
+                    }
+                ]
+            }
+        },
+        components:{
+            tableHead
+        },
+        methods:{
+            addList (){
+                this.showDig = true;
+            },
+            edit (){
+
+            },
+            delet (){
+
+            },
+            ok () {
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        this.$Message.success('Success!');
+                        
+                    } else {
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            cancel () {
+              
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+
+</style>

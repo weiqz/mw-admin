@@ -1,0 +1,75 @@
+<template>
+    <div id="slide_nav">
+        <div class="slide_nav_m">
+            <!-- <h3>系统首页</h3> -->
+            <ul>
+                <li v-for="nav in getnavs" :key=nav.path><router-link :to=nav.path>{{ nav.meta.title }}</router-link></li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data(){
+            return {
+                navs:[]
+            }
+        },
+        created (){
+       
+        },
+        computed:{
+            getnavs(){
+                return this.$store.state.slideNav.filter(n => n.path)
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+    #slide_nav{
+        .slide_nav_m{
+            h3{
+                background: #f2f2f2;
+                color: #888;
+                padding: 12px 0 12px 40px;
+                font-size: 14px;
+                font-weight: 400;
+                border-bottom: 1px solid #ddd;
+            }
+            ul{
+                li{
+                    a{
+                        color: #333;
+                        padding: 12px 0 12px 40px;
+                        font-size: 12px;
+                        color: #555;
+                        display: block;
+                        border-bottom: 1px solid #ddd;
+                        position: relative;
+                        &:hover{
+                            color:@baseColor;
+                        }
+                        &:before{
+                            content: '';
+                            position: absolute;
+                            top: 19px;
+                            left: 29px;
+                            width: 3px;
+                            height: 3px;
+                            background: #000;
+                        }
+                    }
+                    a.router-link-active{
+                        background: #fff;
+                        color: @baseColor;
+                        &:before{
+                            background: @baseColor;
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>

@@ -1,0 +1,389 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import store from '../store/index'
+
+Vue.use(Router)
+
+const login = () => import('../view/Login')
+const layout = () => import('../components/layout')
+const index = () => import('../view/index/index')
+const seting = () => import('../view/seting/index')
+//首页
+const account = () => import('../view/index/account')
+const system = () => import('../view/index/system')
+const loginData = () => import('../view/index/loginData')
+//项目
+const partList = () => import('../view/project/partList')
+//库存
+const commodityLibrary = () => import('../view/inventory/commodityLibrary')
+//订单
+const mallOrders = () => import('../view/order/mallOrders')
+//门店
+const storeList = () => import('../view/stores/storeList')
+//会员
+const memberList = () => import('../view/members/memberList')
+
+//权限
+const authmange = () => import('../view/permissions/authmange.vue')
+const divimange = () => import('../view/permissions/divimange.vue')
+const memmange = () => import('../view/permissions/memmange.vue')
+const operationlog = () => import('../view/permissions/operationlog.vue')
+const addmemmange = () => import('../view/permissions/addmemmange.vue')
+const permSeting = () => import('../view/permissions/permSeting.vue')
+//商品
+const goodsList = () => import('../view/goods/goodsList.vue')
+const supplier = () => import('../view/goods/supplier.vue')
+const commodity = () => import('../view/goods/commodity.vue')
+const evaluation = () => import('../view/goods/evaluation.vue')
+const classification = () => import('../view/goods/classification.vue')
+const ditytype = () => import('../view/goods/ditytype.vue')
+const management = () => import('../view/goods/management.vue')
+const imgmanagement = () => import('../view/goods/imgmanagement.vue')
+const productwatch = () => import('../view/goods/productwatch.vue')
+
+const routes = [{
+    path: '/login',
+    name: 'login',
+    component: login
+  },
+  {
+    path: '',
+    redirect: '/index'
+  },
+  {
+    path: '/index',
+    name: '首页',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/systemIndex'
+      },
+      {
+        path: '/systemIndex',
+        meta: {
+          title: '系统首页'
+        },
+        component: index
+      },
+      {
+        path: '/account',
+        name: account,
+        meta: {
+          title: '账户设置'
+        },
+        component: account
+      },
+      {
+        path: '/system',
+        meta: {
+          title: '系统信息'
+        },
+        component: system
+      }
+    ]
+  },
+  {
+    path: '/goods',
+    name: '商品',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/goodsList'
+      },
+      {
+        path: '/goodsList',
+        meta: {
+          title: '商品列表'
+        },
+        component: goodsList,
+
+      },
+      {
+        path: '/supplier',
+        meta: {
+          title: '供应商商品'
+        },
+        component: supplier
+      },
+      {
+        path: '/commodity',
+        meta: {
+          title: '商品回收站'
+        },
+        component: commodity
+      },
+      {
+        path: '/evaluation',
+        meta: {
+          title: '商品评价'
+        },
+        component: evaluation
+      },
+      {
+        path: '/classification',
+        meta: {
+          title: '商品分类'
+        },
+        component: classification
+      },
+      {
+        path: '/ditytype',
+        meta: {
+          title: '商品类型'
+        },
+        component: ditytype
+      },
+      {
+        path: '/management',
+        meta: {
+          title: '品牌管理'
+        },
+        component: management
+      },
+      {
+        path: '/imgmanagement',
+        meta: {
+          title: '图片库管理'
+        },
+        component: imgmanagement
+      },
+      {
+        path: '/productwatch/:id',
+        name: 'productwatch',
+        meta: {
+          title: '填写商品信息'
+        },
+        component: productwatch
+      },
+    ]
+  },
+  {
+    path: '/project',
+    name: '项目',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/partList'
+      },
+      {
+        path: '/partList',
+        meta: {
+          title: '保养件列表'
+        },
+        component: partList
+      },
+    ]
+  },
+  {
+    path: '/order',
+    name: '订单',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/mallOrders'
+      },
+      {
+        path: '/mallOrders',
+        meta: {
+          title: '商城订单'
+        },
+        component: mallOrders
+      },
+    ]
+  },
+  {
+    path: '/inventory',
+    name: '库存',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/commodityLibrary'
+      },
+      {
+        path: '/commodityLibrary',
+        meta: {
+          title: '商品入库'
+        },
+        component: commodityLibrary
+      },
+    ]
+  },
+  {
+    path: '/stores',
+    name: '门店',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/storeList'
+      },
+      {
+        path: '/storeList',
+        meta: {
+          title: '商品入库'
+        },
+        component: storeList
+      },
+    ]
+  },
+  {
+    path: '/members',
+    name: '会员',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/memberList'
+      },
+      {
+        path: '/memberList',
+        meta: {
+          title: '会员列表'
+        },
+        component: memberList
+      },
+    ]
+  },
+  {
+    path: '/salesPromotion',
+    name: '促销',
+    headNav: true,
+    component: layout,
+    children: []
+  },
+  {
+    path: '/operating',
+    name: '运营',
+    headNav: true,
+    component: layout,
+    children: []
+  },
+  {
+    path: '/content',
+    name: '内容',
+    headNav: true,
+    component: layout,
+    children: []
+  },
+  {
+    path: '/statistical',
+    name: '统计',
+    headNav: true,
+    component: layout,
+    children: []
+  },
+  {
+    path: '/seting',
+    name: '设置',
+    headNav: true,
+    component: layout,
+    children: [{
+        path: '',
+        redirect: '/setingIndex'
+      },
+      {
+        path: '/setingIndex',
+        meta: {
+          title: '基础设置'
+        },
+        component: seting
+      }
+    ]
+  },
+  {
+    path:'/permissions',
+    name:'权限',
+    headNav:true,
+    component:layout,
+    children:[
+        {
+            path:'',
+            redirect:'/divimange'
+        },
+        {
+            path:'/divimange',
+            name:'divimange',
+            meta:{
+                title:'部门管理'
+            },
+            component:divimange
+        },{
+            path:'/memmange/:depa_id',
+            name:'memmange',
+            meta:{
+                title:'成员管理'
+            },
+            component:memmange
+        },{
+            path:'/authmange',
+            name:'authmange',
+            meta:{
+                title:'权限管理'
+            },
+            component:authmange
+        },{
+            path:'/operationlog',
+            name:'operationlog',
+            meta:{
+                title:'操作日志'
+            },
+            component:operationlog
+        },
+        {
+            path:'/loginData',
+            meta:{
+                title:'登录日志'
+            },
+            component:loginData
+        },
+        {
+            path:'/addmemmange/:userId',
+            name:'addmemmange',
+            meta:{
+                title:'添加成员',
+                noBar:true,
+            },
+            component:addmemmange
+        },
+        {
+            path:'/permSeting/:id',
+            name:'permSeting',
+            meta:{
+                title:'权限设置',
+                noBar:true,
+            },
+            component:permSeting
+        }
+    ]
+}
+]
+
+const router = new Router({
+  routes
+})
+
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+  } else {
+    let token = localStorage.getItem('token');
+    if (!token) {
+      next('/login')
+    } else {
+      const toPath = to.redirectedFrom || to.path;
+      const tomod = routes.find(n => n.path === toPath && n.headNav);
+      if (tomod) {
+        store.commit('setSlidenav', tomod.children)
+      }
+      next();
+    }
+  }
+})
+
+export default router

@@ -1,0 +1,26 @@
+<template>
+    <div>
+        <div class="table_head">
+            <h3>数据列表</h3>
+            <Button>添加</Button>
+            <Select v-model="model1" style="width:200px">
+                <Option v-for="item in options" :value="item" :key="item">{{ item }}</Option>
+            </Select>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data (){
+            return {
+                model1:'',
+                options:[10,15,20,50]
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+
+</style>

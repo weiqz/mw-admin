@@ -1,0 +1,751 @@
+<template>
+  <div class="container">
+    <Row :gutter="20">
+      <i-col span="6">
+        <div class="grid-content bg-purple">
+          <div class="to_order">
+            <div class="to_order_img">
+              <img src="../../assets/index/u1486.png" alt="" />
+            </div>
+            <div class="to_order_tol">
+              <div class="order_tit">今日订单总数</div>
+              <div class="order_num">200</div>
+            </div>
+          </div>
+        </div>
+      </i-col>
+      <i-col span="6"
+        ><div class="grid-content bg-purple">
+          <div class="to_order">
+            <div class="to_order_img">
+              <img src="../../assets/index/u1486.png" alt="" />
+            </div>
+            <div class="to_order_tol">
+              <div class="order_tit">昨日销售总额</div>
+              <div class="order_num">200</div>
+            </div>
+          </div>
+        </div></i-col
+      >
+      <i-col span="6"
+        ><div class="grid-content bg-purple">
+          <div class="to_order">
+            <div class="to_order_img">
+              <img src="../../assets/index/u1486.png" alt="" />
+            </div>
+            <div class="to_order_tol">
+              <div class="order_tit">今日销售总额</div>
+              <div class="order_num">200</div>
+            </div>
+          </div>
+        </div></i-col
+      >
+      <i-col span="6"
+        ><div class="grid-content bg-purple">
+          <div class="to_order">
+            <div class="to_order_img">
+              <img src="../../assets/index/u1486.png" alt="" />
+            </div>
+            <div class="to_order_tol">
+              <div class="order_tit">近七天销售总额</div>
+              <div class="order_num">200</div>
+            </div>
+          </div>
+        </div></i-col
+      >
+    </Row>
+    <div class="thing">
+      <Row>
+        <i-col span="24"
+          ><div class="grid-content bg-purple-dark">事物提醒</div></i-col
+        >
+      </Row>
+      <Row type="flex" class="row-bg" justify="space-around">
+        <i-col span="6"
+          ><div class="grid-content bg-purple">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+        <i-col span="6"
+          ><div class="grid-content bg-purple-light">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+        <i-col span="6"
+          ><div class="grid-content bg-purple">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+      </Row>
+      <Row type="flex" class="row-bg" justify="space-around">
+        <i-col span="6"
+          ><div class="grid-content bg-purple">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+        <i-col span="6"
+          ><div class="grid-content bg-purple-light">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+        <i-col span="6"
+          ><div class="grid-content bg-purple">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+      </Row>
+      <Row type="flex" class="row-bg" justify="space-around">
+        <i-col span="6"
+          ><div class="grid-content bg-purple">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+        <i-col span="6"
+          ><div class="grid-content bg-purple-light">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+        <i-col span="6"
+          ><div class="grid-content bg-purple">
+            <div class="wait_order">
+              <div class="wait_order_tit">待付款订单</div>
+              <div class="wait_order_num">
+                （<span style="color:rgb(240, 72, 68)">10</span>）
+              </div>
+            </div>
+          </div></i-col
+        >
+      </Row>
+    </div>
+    <div class="quick">
+      <Row>
+        <i-col span="24"
+          ><div class="grid-content bg-purple-dark quick_tit">
+            快捷入口
+          </div></i-col
+        >
+      </Row>
+      <div class="quick_entrance">
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+        <div class="quick_entrance_any">
+          <div class="quick_entrance_img">
+            <img src="../../assets/index/u1702.png" alt="" />
+          </div>
+          <div class="quick_entrance_tit">门店列表</div>
+        </div>
+      </div>
+    </div>
+    <div class="overview">
+      <Row>
+        <i-col span="12"
+          ><div class="grid-content bg-purple ddd">
+            <div class="commodity">商品总览</div>
+            <div class="product">
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">已下架</div>
+              </div>
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">已上架</div>
+              </div>
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">库存紧张</div>
+              </div>
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">全部商品</div>
+              </div>
+            </div>
+          </div></i-col
+        >
+
+        <i-col span="12"
+          ><div class="grid-content bg-purple-light ccc">
+            <div class="member">
+              会员总览
+            </div>
+            <div class="product">
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">今日新增</div>
+              </div>
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">昨日新增</div>
+              </div>
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">本月新增</div>
+              </div>
+              <div class="dismount">
+                <div class="num">400</div>
+                <div class="describe">会员总数</div>
+              </div>
+            </div>
+          </div></i-col
+        >
+      </Row>
+    </div>
+    <div class="orderStatistics">
+      <div class="orderStatistics_tit">
+        <Row>
+          <i-col span="24"
+            ><div class="grid-content bg-purple-dark quick_tit">
+              订单统计
+            </div></i-col
+          >
+        </Row>
+      </div>
+      <div class="orderStatistics_content">
+        <div class="orderStatistics_left">
+          <div class="monthlyOrder">
+            <div class="month_tol">本月订单总数</div>
+            <div class="month_num">10000</div>
+            <div class="month_compare">
+              <Icon type="arrow-up-b" size="10px"></Icon>
+              <span style="color:rgb(0, 169, 80)">10%</span>
+              <span style="color:font-size: 12px;color: rgb(204, 204, 204);"
+                >环比上月</span
+              >
+            </div>
+          </div>
+          <div class="weeklyOrder">
+            <div class="week_tol">本周订单总数</div>
+            <div class="week_num">1000</div>
+            <div class="week_compare">
+              <span style="color:rgb(0, 169, 80)">10%</span
+              ><span style="color:font-size: 12px;color: rgb(204, 204, 204);">
+                环比上周</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="orderStatistics_right">
+          <div class="explanation">
+            <div class="day">
+            <span>今日</span>
+            <span>本周</span>
+            <span>本月</span>
+            </div>
+            <div class="month">
+                 <row>
+        <i-col span="12">
+            <Date-picker type="daterange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></Date-picker>
+        </i-col>
+    </row>
+            </div>
+          </div>
+          <div id="myChart" :style="{ width: '100%', height: '500px' }"></div>
+        </div>
+      </div>
+    </div>
+    <div class="orderStatistics">
+      <div class="orderStatistics_tit">
+        <Row>
+          <i-col span="24"
+            ><div class="grid-content bg-purple-dark quick_tit">
+              销售统计
+            </div></i-col
+          >
+        </Row>
+      </div>
+      <div class="orderStatistics_content">
+        <div class="orderStatistics_left">
+          <div class="monthlyOrder">
+            <div class="month_tol">本月订单总数</div>
+            <div class="month_num">10000</div>
+            <div class="month_compare">
+              <Icon type="arrow-up-b" size="10px"></Icon>
+              <span style="color:rgb(0, 169, 80)">10%</span>
+              <span style="color:font-size: 12px;color: rgb(204, 204, 204);"
+                >环比上月</span
+              >
+            </div>
+          </div>
+          <div class="weeklyOrder">
+            <div class="week_tol">本周订单总数</div>
+            <div class="week_num">1000</div>
+            <div class="week_compare">
+              <span style="color:rgb(0, 169, 80)">10%</span
+              ><span style="color:font-size: 12px;color: rgb(204, 204, 204);">
+                环比上周</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="orderStatistics_right">
+          <div class="explanation">
+           <div class="day">
+              <span>今日</span>
+            <span>本周</span>
+            <span>本月</span>
+           </div>
+             <row>
+        <i-col span="12">
+            <Date-picker type="daterange" placement="bottom-end" placeholder="选择日期" style="width: 200px"></Date-picker>
+        </i-col>
+    </row>
+          </div>
+          <div id="myCharts" :style="{ width: '100%', height: '500px' }"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {}
+  },
+  mounted() {
+    this.drawLine()
+    this.sales()
+  },
+  methods: {
+    drawLine() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById('myChart'))
+      // 绘制图表
+      myChart.setOption({
+        title: {
+          text: '近一周订单统计',
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985',
+            },
+          },
+        },
+        legend: {
+          data: ['邮件营销'],
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true,
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          },
+        ],
+        yAxis: [
+          {
+            type: 'value',
+          },
+        ],
+        series: [
+          {
+            name: '搜索引擎',
+            type: 'line',
+            stack: '总量',
+            label: {
+              normal: {
+                show: true,
+                position: 'top',
+              },
+            },
+            areaStyle: {},
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+          },
+        ],
+      })
+    },
+    sales() {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById('myCharts'))
+      // 绘制图表
+      myChart.setOption({
+        title: {
+          text: '近一周销售统计',
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985',
+            },
+          },
+        },
+        legend: {
+          data: ['邮件营销'],
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true,
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+          },
+        ],
+        yAxis: [
+          {
+            type: 'value',
+          },
+        ],
+        series: [
+          {
+            name: '搜索引擎',
+            type: 'line',
+            stack: '总量',
+            label: {
+              normal: {
+                show: true,
+                position: 'top',
+              },
+            },
+            areaStyle: {},
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+          },
+        ],
+      })
+    },
+  },
+  created() {},
+}
+</script>
+
+<style lang="less" scoped>
+.container {
+  padding: 20px 20px;
+}
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.i-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+.to_order {
+  border: 1px solid #e4e4e4;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .to_order_img {
+    width: 48px;
+    height: 48px;
+    .img {
+      width: 48px;
+      height: 48px;
+    }
+  }
+  .to_order_tol {
+    margin-left: 20px;
+    .order_tit {
+      font-size: 16px;
+      color: #999;
+    }
+    .order_num {
+      color: #333;
+      font-size: 20px;
+    }
+  }
+}
+
+.row-bg[data-v-b56e1978] {
+  padding: 0;
+}
+.row-bg[data-v-b56e1978] {
+  background-color: #fff;
+}
+.bg-purple[data-v-b56e1978] {
+  background-color: #fff;
+}
+.bg-purple-light[data-v-b56e1978] {
+  background-color: #fff;
+}
+.bg-purple-dark[data-v-b56e1978] {
+  background-color: #f2f2f2;
+}
+.grid-content[data-v-b56e1978] {
+  padding: 5px 0 0 16px;
+  line-height: 28px;
+}
+.thing {
+  margin-top: 20px;
+  border: 1px solid #e4e4e4;
+  padding-bottom: 20px;
+}
+.wait_order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e4e4e4;
+}
+// 快捷入口
+.quick {
+  margin-top: 20px;
+
+  border: 1px solid #e4e4e4;
+  .quick_entrance {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .quick_entrance_img {
+      width: 50px;
+      height: 50px;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+  .quick_entrance_tit {
+    margin-top: 20px;
+    margin-right: 10px;
+  }
+}
+//商品总览/会员总览
+.overview {
+  margin-top: 20px;
+  .ddd {
+    border: 1px solid #e4e4e4;
+    padding: 0;
+    .commodity {
+      padding: 10px 0 10px 16px;
+      background-color: #f2f2f2;
+    }
+    .product {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .dismount {
+        padding: 50px 0;
+        text-align: center;
+        .num {
+          font-size: 28px;
+          color: #f04844;
+        }
+        .describe {
+          font-size: 16px;
+          color: #666;
+        }
+      }
+    }
+  }
+  .ccc {
+    border: 1px solid #e4e4e4;
+    padding: 0;
+    margin-left: 20px;
+    .member {
+      padding: 10px 0 10px 16px;
+      background-color: #f2f2f2;
+    }
+    .product {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .dismount {
+        padding: 50px 0;
+        text-align: center;
+        .num {
+          font-size: 28px;
+          color: #f04844;
+        }
+        .describe {
+          font-size: 16px;
+          color: #666;
+        }
+      }
+    }
+  }
+}
+.orderStatistics {
+  border: 1px solid #e4e4e4;
+  width: 100%;
+  margin-top: 20px;
+  .orderStatistics_tit {
+  }
+  .orderStatistics_content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    .orderStatistics_left {
+      height: 100%;
+
+      width: 10%;
+      margin: 100px auto;
+      padding-left: 30px;
+      .monthlyOrder {
+        .month_tol {
+          font-size: 12px;
+          color: rgb(152, 152, 152);
+        }
+        .month_num {
+          font-size: 28px;
+          color: rgb(102, 102, 102);
+        }
+        .month_compare {
+        }
+      }
+      .weeklyOrder {
+        margin-top: 30px;
+        .week_tol {
+          font-size: 12px;
+          color: rgb(152, 152, 152);
+        }
+        .week_num {
+          font-size: 28px;
+          color: rgb(102, 102, 102);
+        }
+        .week_compare {
+        }
+      }
+    }
+    .orderStatistics_right {
+      border-left: 1px solid #e4e4e4;
+      width: 90%;
+      .explanation {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        float: right;
+        padding-right: 60px;
+        padding-top: 10px;
+        .day{
+          margin-right: 15px;
+        }
+      }
+      .explanation::after {
+        clear: both;
+        overflow: hidden;
+      }
+    }
+  }
+}
+</style>

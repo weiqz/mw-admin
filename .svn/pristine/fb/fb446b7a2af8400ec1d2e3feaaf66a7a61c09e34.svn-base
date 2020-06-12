@@ -1,0 +1,17 @@
+import req from '../request/request'
+
+export function addColumn(data){
+    return req({
+        url:'/api/column/add',
+        method:'post',
+        data
+    })
+}
+
+export function getColList(params){
+    return req({
+        url:'/api/column/list',
+        method:'get',
+        params
+    })
+}

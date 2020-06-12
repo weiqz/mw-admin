@@ -1,0 +1,290 @@
+<template>
+    <div v-if="actions.view==='y' || getUserInfo.user_name==='admin'">
+        <Combox :title=title ico="ivu-icon ivu-icon-md-list" :isFoot="false" :isBorder="true">
+            <template v-slot:right>
+                <el-button plain size="mini" @click="addColumn" v-if="actions.add === 'y' || getUserInfo.user_name==='admin'">添加根栏目</el-button>
+            </template>
+            <template v-slot:center>  
+                <div class="authBox">
+                    <div class="top_act">
+                        <table class="auth_table" border="0" cellpadding="0" cellspacing="0">
+                            <tr style="background:#eee" class="bold-font">
+                                <td width="180">操作</td>
+                                <td width="180">子栏目名称</td>
+                                <td width="210">模块名称</td>
+                                <td align="left">操作权限</td>
+                            </tr>
+                            <tbody v-for="colu in rows" :key="colu.id">
+                            <tr>
+                                <td>
+                                    <div class="cell">
+                                        <a @click="showaddchildCol(colu,$event)" v-if="actions.add === 'y' || getUserInfo.user_name==='admin'">新增子栏目</a>
+                                        <a @click="editColumn(colu.id)" v-if="actions.update === 'y' || getUserInfo.user_name==='admin'">编辑</a>
+                                    </div>
+                                </td>
+                                <td colspan="3" class="bold-font">
+                                    {{ colu.column_name }}
+                                </td>
+                            </tr>
+                            <tr v-for="chil_colum in colu.children" :key="chil_colum.id">
+                                <td rowspan="1">
+                                    <div class="cell">
+                                        <a @click="showaddchildMod(chil_colum,$event)" v-if="actions.add === 'y' || getUserInfo.user_name==='admin'">新增模块</a>
+                                        <a @click="editchildCol(chil_colum.id,colu)" v-if="actions.update === 'y' || getUserInfo.user_name==='admin'">编辑</a>
+                                     
+                                    </div>
+                                </td>
+                                <td rowspan="1">{{ chil_colum.column_name }}</td>
+                                <td colspan="2" style="padding:0;">
+                                    <table class="mod_table" border="0" cellpadding="0" cellspacing="0">
+                                        <tr v-for="child_mod in chil_colum.children" :key="child_mod.id">
+                                            <td width="210" class="mod_column">
+                                                {{ child_mod.column_name }}
+                                                
+                                                <i @click="editchildMod(child_mod.id,chil_colum)" class="el-icon-edit" title="编辑模块" v-if="actions.update === 'y' || getUserInfo.user_name==='admin'"></i>
+                                 
+                                            </td>
+                                            <td class="left_align">
+                                                <i class="el-icon-plus addaction_btn" title="添加操作" @click="addActions(child_mod)" v-if="actions.add === 'y' || getUserInfo.user_name==='admin'"></i>
+                                                    <span v-for="act in child_mod.actions" :key="act.id">{{ act.action_name }}</span>
+                                            </td>
+                                        </tr>
+                                       
+                                    </table>
+                                </td>                   
+                            </tr>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div>
+            </template>
+        </Combox>
+
+        <el-dialog
+        :title="column_title"
+        :visible.sync="addColuVisible"
+        width="600px">
+            <addColumn ref="addcol" :editid="editID" @uplist="getColList"></addColumn>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addColuVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addColuok">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog
+        :title="title2"
+        :visible.sync="addchildColVisible"
+        width="600px">
+            <addchildCol @uplist="getColList" ref="addchildcols" :isModule="isChildmod" :modid="child_col_mod_id" :currcol="currColumn"></addchildCol>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="addchildColVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addchildColuok">确 定</el-button>
+            </span>
+        </el-dialog>
+
+        <el-dialog
+        title="新增操作"
+        :visible.sync="addActionsVb"
+        width="750px">
+            <addmodAction @uplist="getColList" ref="addAction" :to_column="currColumn"></addmodAction>
+            <!-- <span slot="footer" class="dialog-footer">
+                <el-button @click="addActionsVb = false">取 消</el-button>
+                <el-button type="primary" @click="addActionsok">确 定</el-button>
+            </span> -->
+        </el-dialog>
+
+    </div>
+    <div v-else>
+        <el-alert title="您无权限浏览此页面信息！" type="warning"> </el-alert>
+     </div>
+</template>
+
+<script>
+import addColumn from './addColumn'
+import addmodAction from './addmodAction'
+import addchildCol from './addchildCol'
+
+import { getColList } from '../../api/permissions'
+
+    export default {
+        data (){
+            return {
+                child_col_mod_id:null,
+                editID:0,
+                column_title:'',
+                title2:'新增子栏目',
+                actions:{},
+                rows:[],
+                addColuVisible:false,
+                addchildColVisible:false,
+                addActionsVb:false,
+                title:'权限维护',
+                currColumn:null,
+                isChildmod:false
+            }
+        },
+        created(){
+            this.getColList()
+        },
+        computed: {
+            getmid(){
+                return this.$store.getters.mid;
+            },
+            getUserInfo(){
+                return JSON.parse(localStorage.getItem('userinfo'))
+            },
+        },
+        methods:{
+            getColList(){
+                getColList({
+                    cid:this.getmid
+                }).then((res)=>{
+                    console.log(res)
+                    if(res.code==='0'){
+                        this.actions = res.data.actions;
+                        this.rows = res.data.rows;
+                    }
+                })
+            },
+            addColumn (){
+                this.editID = 0
+                this.column_title = '添加根栏目'
+                this.addColuVisible = true
+                setTimeout(() => {
+                    this.$refs.addcol.initData();
+                },1)
+                
+            },
+            addColuok (){
+                if(this.column_title==='添加根栏目'){
+                    this.$refs.addcol.addRequest()
+                }else{
+                    this.$refs.addcol.editRequest()
+                }
+            },
+            addchildColuok (){
+                if(this.title2==='修改子栏目/模块'){
+                     this.$refs.addchildcols.editRequest()
+                }else{
+                    this.$refs.addchildcols.addChildcolu()
+                }
+                
+            },
+            showaddchildCol (obj,e){
+                this.addchildColVisible = true;
+                this.isChildmod = false;
+                this.title2 = e.srcElement.innerHTML
+                this.currColumn = obj
+                setTimeout(() => {
+                    this.$refs.addchildcols.initData2();
+                },1)
+            },
+            showaddchildMod (obj,e){
+                this.addchildColVisible = true;
+                this.title2 = e.srcElement.innerHTML;
+                this.currColumn = obj;
+                this.isChildmod = true;
+                setTimeout(() => {
+                    this.$refs.addchildcols.initData2();
+                },1)
+            },
+            addActions (obj){
+                this.currColumn = obj;
+                this.addActionsVb = true;
+                setTimeout(() => {
+                    this.$refs.addAction.disStory();
+                },1)
+            },
+            editColumn(id){
+                this.editID = id
+                this.column_title = '编辑根栏目'
+                this.addColuVisible = true
+                setTimeout(() => {
+                    this.$refs.addcol.getcolDet();
+                },1)
+            },
+            editchildCol(child_colu_id,obj){
+                this.child_col_mod_id = child_colu_id
+                this.currColumn = obj
+                this.isChildmod = false
+                this.title2 = '修改子栏目/模块'
+                this.addchildColVisible = true
+
+            },
+            editchildMod(child_mod_id,obj){
+                this.child_col_mod_id = child_mod_id
+                this.currColumn = obj
+                this.isChildmod = true
+                this.title2 = '修改子栏目/模块'
+                this.addchildColVisible = true;
+
+            }
+        },
+        components:{
+            addColumn,
+            addmodAction,
+            addchildCol
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+    .authBox{
+        margin: 40px;
+        border: 1px solid #ddd;
+        border-right: 0;
+        border-top: 0;
+    }
+    .auth_table{
+        width: 100%;
+
+        td{
+            padding: 8px 0;
+            font-size: 14px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+        }
+        td.left_align{
+             text-align: left;
+             span{
+                 padding: 3px 5px;
+                 color: #888;
+                 background: #f3f3f3;
+                 margin-left: 5px;
+             }
+        }
+        table.mod_table{
+            width: 100%;
+            tr{
+                td:last-child{
+                    border-right: 0;
+                }
+            }
+            tr:first-child{
+                td{
+                    border-top: 0;
+                }
+            }
+        }
+    }
+    .i-icons-btn{
+        display: inline-block;
+        margin-left: 10px;
+        cursor: pointer;
+        font-weight: 500;
+        color: @baseColor;
+        font-size: 16px;
+    }
+    td.mod_column {
+        i{
+            .i-icons-btn
+        }
+    }
+    i.addaction_btn{
+        .i-icons-btn
+    }
+</style>
+
+

@@ -1,0 +1,50 @@
+<template>
+    <div>
+        <div style="margin:40px 0 40px 100px">
+           <el-form ref="form" :model="form" label-width="120px" style="width:360px">
+                <el-form-item label="栏目/模块名称" required>
+                    <el-input v-model="form.cCol_name"></el-input>
+                </el-form-item>
+                <el-form-item label="所属栏目">
+                    <el-input v-model="toCol" :disabled="true"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</template>
+
+<script>
+import { addColumn } from '../../api/permissions'
+    export default {
+        props:{
+            currcol:Object
+        },
+        data (){
+            return {
+                form:{
+                    cCol_name:'',
+                }
+            }
+        },
+        computed: {
+            toCol (){
+                return this.currcol.column_name
+            }
+        },
+        methods:{
+            addChildcolu (){
+                addColumn({
+                    parent_id:this.currcol.id,
+                    column_name:this.form.cCol_name,
+                    column_path:'/dsgdrg'
+                }).then(() => {
+                    this.$emit('uplist');
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+
+</style>

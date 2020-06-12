@@ -1,0 +1,36 @@
+# mw-admin
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### 公用组件
+
+<Combox title="数据列表" ico="ivu-icon ivu-icon-md-list">
+    <template v-slot:right>
+
+    </template>
+    <template v-slot:center>  
+      
+    </template>
+</Combox>

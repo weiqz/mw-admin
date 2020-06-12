@@ -1,0 +1,134 @@
+<template>
+    <div>
+        <Combox title="数据列表" ico="ivu-icon ivu-icon-md-list">
+            <template v-slot:right>
+                <el-button plain @click="addList" size="mini">添加</el-button>
+               <el-select v-model="seleValue" placeholder="显示条目" size="mini" style="width:100px">
+                    <el-option
+                    v-for="item in options"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                    </el-option>
+                </el-select>
+            </template>
+            <template v-slot:center>
+                 <el-table ref="filterTable" :data="data1" border :fit="true">
+                        <el-table-column prop="department_name" label="部门名称" ></el-table-column>
+                        <el-table-column prop="department_description" label="职能描述" ></el-table-column>
+                        <el-table-column prop="department_number" label="成员数量" >
+                            <template slot-scope="scope">
+                                <router-link :to="{name:'memmange',params:{depa_id:scope.row.id}}">{{ scope.row.department_number }}</router-link>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="created_time" label="添加时间"></el-table-column>
+                        <el-table-column prop="is_valid" label="是否启用">
+                            <template slot-scope="scope">
+                                <el-switch
+                                    v-model="scope.row.is_valid"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949">
+                                    </el-switch>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="actions" label="操作">
+                            <template slot-scope="scope">
+                                <router-link :to="{name:'permSeting',params:{depa_id:scope.row.id}}">权限设置</router-link>
+                                <a @click="edit(scope.row)">编辑</a>
+                                <a @click="delet">删除</a>
+                            </template>
+                        </el-table-column>
+                </el-table>
+            </template>
+        </Combox>
+
+        <el-dialog
+        :title="title"
+        :visible.sync="showDig"
+        width="30%">
+        <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="80px">
+            <el-form-item label="部门名称" prop="name">
+                <el-input v-model="formValidate.name"></el-input>
+            </el-form-item>
+            <el-form-item label="部门描述" prop="desc">
+                <el-input type="textarea" v-model="formValidate.desc"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="cancel">取 消</el-button>
+            <el-button type="primary" @click="ok">确 定</el-button>
+        </span>
+        </el-dialog>
+
+    </div>
+</template>
+
+<script>
+    export default {
+        data (){
+            return {
+                seleValue:'',
+                showDig:false,
+                title:'添加部门',
+                options:[10,15,20,50],
+                formValidate:{
+                    name:'',
+                    desc:''
+                },
+                ruleValidate:{
+                    name:[
+                        { required: true, message: '请输入部门名称', trigger: 'blur' }
+                    ],
+                    desc:[
+                        { required: true, message: '请输入内容', trigger: 'blur' }
+                    ]
+                },
+                data1: [
+                    {
+                        id:'6545',
+                        department_name: 'John Brown',
+                        department_description: 'sdfdsfdsfds',
+                        department_number: 10,
+                        created_time: '2016-10-03',
+                        is_valid:true
+                    }
+                ]
+            }
+        },
+        methods:{
+            addList (){
+                this.formValidate.name = '';
+                 this.formValidate.desc = '';
+                this.showDig = true;
+            },
+            edit (row){
+                console.log(row)
+                 this.formValidate.name = row.department_name;
+                 this.formValidate.desc = row.department_description;
+                 this.title = '编辑部门'
+                 this.showDig = true;
+            },
+            delet (){
+
+            },
+            ok () {
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        this.$Message.success('Success!');
+                        
+                    } else {
+                    
+                        this.$Message.error('Fail!');
+                    }
+                })
+            },
+            cancel () {
+              
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+
+</style>

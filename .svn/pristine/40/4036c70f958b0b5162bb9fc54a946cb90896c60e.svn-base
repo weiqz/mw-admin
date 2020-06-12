@@ -1,0 +1,120 @@
+<template>
+  <div class="container">
+    <el-row>
+      <el-col :span="24">
+        <div class="grid-content bg-purple-dark"></div>
+      </el-col>
+    </el-row>
+    <div class="content">
+      <div style="line-height:37px">
+        <span>商品货号:</span>
+        <span>NO655444</span>
+      </div>
+      <div>
+        <el-input placeholder="按SKU编码搜索"
+                  v-model="input3"
+                  class="input-with-select">
+
+          <el-button slot="append"
+                     icon="el-icon-search"></el-button>
+        </el-input>
+      </div>
+    </div>
+    <table border="1"
+           cellpadding="0"
+           cellspacing="0"
+           style="margin-top:30px" class="chima">
+      <thead>
+        <tr id="bar_head">
+          <th>SKU编号</th>
+          <th>尺码</th>
+          <th>颜色</th>
+          <th>销售价格</th>
+          <th>商品库存</th>
+          <th>库存预警之</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>45345</td>
+          <td>标配无卡无停车监控</td>
+          <td>黑色</td>
+          <td><input type="num"
+                   style="width:50px;"></td>
+          <td><input type="num"
+                   style="width:50px"></td>
+          <td><input type="num"
+                   style="width:50px"></td>
+        </tr>
+      </tbody>
+    </table>
+   <div class="btn">
+      <el-row >
+      <el-button type="success">确定</el-button>
+      <el-button type="info">取消</el-button>
+    </el-row>
+   </div>
+    <!-- <span>这是一段信息</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span> -->
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      input3: ''
+    }
+  },
+  methods: {
+    handleClose (done) {
+      this.$confirm('确认关闭？')
+        .then(r => {
+          done(r);
+        })
+        .catch(r => {
+          console.log(r)
+        });
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+
+table {
+  border: 1px solid #ccc;
+  border-width: 1px 0px 0px 1px;
+  td,
+  th {
+    text-align: center;
+    width: 80px;
+    border-width: 0px 1px 1px 0px;
+  }
+}
+input {
+  border: 0; // 去除未选中状态边框
+  outline: none; // 去除选中状态边框
+}
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.content {
+  display: flex;
+  justify-content: space-around;
+}
+.el-input-group {
+  width: 70%;
+}
+.btn{
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+</style>

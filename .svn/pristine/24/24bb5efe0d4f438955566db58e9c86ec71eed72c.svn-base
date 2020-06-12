@@ -1,0 +1,78 @@
+<template>
+    <div id="login">
+        <div class="login_cen">
+            <h1>魔界</h1>
+            <Input v-model="userinfo.user_name" size="large" placeholder="请输入用户名称" />
+            <br>
+            <Input v-model="userinfo.password" type="password" size="large" placeholder="请输入登录密码" />
+            <br>
+            <Button :size="buttonSize" @click="loginFn" type="default">登录</Button>
+        </div>
+    </div>
+</template>
+
+<script>
+import { login } from '../api/login'
+    export default {
+        data(){
+            return {
+                userinfo:{
+                    user_name:'admin',
+                    password:'adminShows888'
+                }
+            }
+        },
+        methods:{
+            loginFn (){
+                // const arr = this.$router.options.routes;
+                // const chi = arr.find(n => n.path==='/index');
+                // this.$store.commit('setSlidenav',chi.children)
+                if(this.userinfo.user_name=='' || this.userinfo.password==''){
+                     this.$Message.warning('请将信息填写完整！');
+                    return false
+                }
+                login(this.userinfo).then((res) => {
+                    
+                    if(res.code==1){
+                        this.$Message.error('用户名或密码有误！');
+                        return false
+                    }
+                    localStorage.setItem('userinfo',JSON.stringify(res.data));
+                    this.$store.commit('saveToken',res.data.token)
+                    this.$router.push('/index')
+                },()=>{
+                    this.$Message.error('登录失败，请稍后再试!');
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+@import '../style/main.less';
+    div#login{
+        width: 100%;
+        height: 100%;
+        background: url('../assets/login_bg.png') rgba(0, 153, 255,1);
+        position: relative;
+        .login_cen{
+            h1{
+                color: #fff;
+                text-align: center;
+                margin-bottom: 50px;
+            }
+            width: 300px;
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            margin-left: -150px;
+        }
+    }
+    .i-input{
+        margin-bottom: 20px;
+    }
+    .i-button{
+        font-size: 18px;
+        color: @baseColor;
+    }
+</style>

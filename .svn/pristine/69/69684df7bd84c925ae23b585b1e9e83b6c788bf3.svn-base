@@ -1,0 +1,169 @@
+<template>
+    <div>
+        <div class="form-box">
+            <el-form ref="form" :model="form" label-width="120px">
+                 <el-form-item label="所属栏目">
+                    <el-input v-model="tocol" :disabled="true"></el-input>
+                </el-form-item>
+                <el-form-item label="操作名称" required>
+                    <el-input v-model="form.action_name"></el-input>
+                </el-form-item>
+                <el-form-item label="操作别名" required>
+                      <el-select allow-create filterable v-model="form.action_fname" placeholder="请选择操作别名">
+                        <el-option
+                        v-for="item in options"
+                        :key="item"
+                        :label="item"
+                        :value="item">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit">保存</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="act">
+            <h3>模块操作列表</h3>
+            <table class="action_table" border="0" cellpadding="0" cellspacing="0">
+                <tr style="background:#eee">
+                    <td width="120">编号</td>
+                    <td>操作名称</td>
+                    <td>操作别名</td>
+                    <td>操作排序</td>
+                    <td width="120">操作</td>
+                </tr>
+                <tr v-for="act in action_list" :key="act.id">
+                    <td>{{ act.id }}</td>
+                    <td>
+                        {{ act.action_name }}
+                    </td>
+                    <td>
+                        {{ act.alias }}
+                    </td>
+                    <td>
+                        {{ act.position }}
+                    </td>
+                    <td>
+                        <div class="cell">
+                            <a @click="edit_act(act)"> 修改 </a>
+                         <!-- <a @click="del_act(act)"> 删除 </a> -->
+                        </div>
+                    </td>
+                </tr> 
+            </table>
+        </div>
+    </div>
+</template>
+
+<script>
+import { getActionList } from '../../api/permissions'
+import { addAction } from '../../api/permissions'
+import { updateAction } from '../../api/permissions'
+
+    export default {
+        props:{
+            to_column:Object
+        },
+        computed: {
+            tocol (){
+                return this.to_column.column_name
+            }
+        },
+        data (){
+            return {
+                saveFlag:'',
+                form:{
+                    id:'',
+                    action_name:'',
+                    action_fname:'',
+                },
+                input:'',
+                value:'',
+                value2:'',
+                options:['add','view','delete','query','update'],
+                options2:[1,2,3,4],
+                action_list:[]
+            }
+        },
+        created(){
+            this.getList()
+        },
+        methods:{
+            disStory (){
+                Object.assign(this.$data, this.$options.data());
+                this.getList()
+            },
+            onSubmit (){
+                let resFn;
+                if(this.saveFlag==='edit'){
+                    resFn = updateAction({
+                        id: this.form.id,
+                        column_id:this.to_column.id,
+                        action_name:this.form.action_name,
+                        alias:this.form.action_fname
+                    })
+                }else{
+                    resFn = addAction({
+                        column_id:this.to_column.id,
+                        action_name:this.form.action_name,
+                        alias:this.form.action_fname
+                    })
+                }
+                resFn.then((res) => {
+                    
+                    if(res.code==='0'){
+                        this.$emit('uplist');
+                        this.getList();
+                        this.disStory()
+                    }
+                })
+            },
+            edit_act({action_name,alias,id}){
+                this.saveFlag = 'edit';
+                this.form.action_name = action_name;
+                this.form.action_fname = alias;
+                this.form.id = id;
+            },
+            del_act(){
+
+            },
+            getList(){
+                getActionList({
+                    id:this.to_column.id
+                }).then((res) => {
+                    if(res.code==='0'){
+                        this.action_list = res.data
+                    }
+                })
+            }
+    }
+}
+</script>
+
+<style lang="less" scoped>
+    .form-box{
+        width: 400px;
+    }
+    .act{
+        h3{
+            padding: 10px 0;
+            margin: 0 0 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+    }
+    .action_table{
+        width: 100%;
+        border: 1px solid #ddd;
+        border-left:0;
+        border-top:0;
+        tr{
+            td{
+                padding: 10px;
+                text-align: center;
+                border-left:1px solid #ddd;
+                border-top:1px solid #ddd;
+            }
+        }
+    }
+</style>

@@ -1,0 +1,151 @@
+<template>
+  <div id="head">
+    <h1 class="logo">{{ logo }}</h1>
+    <ul class="top_nav">
+      <li v-for="item in menudata" :key="item.path">
+        <router-link :to=item.path>{{ item.name }}</router-link>
+      </li>
+    </ul>
+    <div class="head_nav_right">
+      <a>
+        <Icon type="ios-contact" />
+        <span class="user_name" v-if="getUserInfo">{{ getUserInfo.user_name }}</span>
+      </a>
+      <a><Icon type="md-home" /></a>
+      <a><Icon type="md-menu" /></a>
+      <a><Icon type="md-notifications-outline" /></a>
+
+      <a><Icon type="ios-color-palette" /></a>
+      <a @click="logout" style="border:0"><Icon type="md-power" /></a>
+
+    </div>
+  </div>
+</template>
+
+<script>
+import { logouts } from '../api/login'
+import getToken from '../util/getToken'
+export default {
+  props: {
+    
+  },
+  data (){
+    return {
+      logo:'魔界',
+      menudata:[]
+    }
+  },
+  created (){
+    this.menudata=this.$router.options.routes.filter(
+      item => item.headNav
+    );
+  },
+  computed:{
+    getUserInfo(){
+      return JSON.parse(localStorage.getItem('userinfo'))
+    }
+  },
+  methods:{
+    logout(){
+      let token = getToken();
+      if(token){
+        logouts(token).then((res)=>{
+          if(res.code === '0'){
+                this.$store.commit('removeToken');
+                this.$router.push('/login')
+            
+          }else{
+                this.$Message['error']({
+                    background: true,
+                    content: '操作失败'
+                });
+          }
+        })
+      }else{
+        this.$router.push('/login')
+      }
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less" scoped>
+h3 {
+  margin: 40px 0 0;
+  span {
+    color:#fff;
+  }
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+}
+a {
+  color: #42b983;
+}
+#head{
+  height: 48px;
+  border-bottom: 2px solid #474b56;
+  background: #595e6c;
+  width: 100%;
+  .logo{
+    color:#fff;
+    font-size: 20px;
+    line-height: 50px;
+    margin-left: 45px;
+    float: left;
+  }
+  .top_nav{
+    float: left;
+    height: 100%;
+    margin-left: 10px;
+    li{
+      float: left;
+      a{
+        display: block;
+        line-height: 50px;
+        padding: 0 18px;
+        color: #fff;
+        font-size:12px;
+        &:hover{
+          color: #ddd;
+        }
+      }
+    }
+  }
+}
+.head_nav_right{
+  float: right;
+  position: relative;
+  top: 15px;
+  right:30px;
+  a{
+    display: inline-block;
+    color: #fff;
+    padding: 0 18px;
+    font-size: 12px;
+    border-right:1px solid #434854;
+    cursor: pointer;
+    &:hover{
+      opacity: 0.9;
+    }
+    i{
+      display: inline-block;
+      color: #fff;
+      font-size: 21px;
+    }
+    i.el-icon-s-custom{
+      padding: 0;
+    }
+    span.user_name{
+      margin-left: 5px;
+      position: relative;
+      top: -3px;
+    }
+  }
+}
+</style>

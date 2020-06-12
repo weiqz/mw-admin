@@ -1,0 +1,166 @@
+<template>
+  <div>
+    <Combox :title=title
+            :isFoot="true">
+      <template v-slot:right>
+        111
+      </template>
+      <template v-slot:center>
+
+        <table border="1"
+               cellpadding="0"
+               cellspacing="0"
+               style="margin-top:30px">
+          <thead>
+            <tr id="bar_head">
+              <th colspan="1">模块名称</th>
+              <th colspan="1">子模块名称</th>
+              <th colspan="3">操作权限</th>
+            </tr>
+            <tr>
+              <th colspan="5">
+                <el-checkbox v-model="checked">商品</el-checkbox>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="5">
+                <el-checkbox v-model="checked">商品管理</el-checkbox>
+              </td>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+              </td>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+              </td>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+              </td>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+
+              </td>
+            </tr>
+            <tr>
+              <td rowspan="2">
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+              </td>
+              <td>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+                <el-checkbox v-model="checked">商品列表</el-checkbox>
+
+              </td>
+            </tr>
+
+          </tbody>
+          <tr style="height:50px">
+            <th colspan="5">
+              <el-checkbox v-model="checked">全选</el-checkbox>
+            </th>
+          </tr>
+        </table>
+      </template>
+      <template v-slot:foot>
+        <el-row>
+          <el-button type="success">保存</el-button>
+
+        </el-row>
+      </template>
+    </Combox>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      title: "当前部门:技术部",
+      checked: false,
+      proList: [
+        {
+          id: 0,
+          total: '商品',
+          proList: [
+            {
+              proid: 0,
+              tit: "商品列表",
+              tit1: "商品列表",
+              tit2: "商品列表",
+              tit3: "商品列表",
+              tit4: "商品列表",
+            },
+            {
+              proid: 0,
+              tit: "商品列表",
+              tit1: "商品列表",
+              tit2: "商品列表",
+              tit3: "商品列表",
+              tit4: "商品列表",
+            },
+            {
+              proid: 0,
+              tit: "商品列表",
+              tit1: "商品列表",
+              tit2: "商品列表",
+              tit3: "商品列表",
+              tit4: "商品列表",
+            },
+            {
+              proid: 0,
+              tit: "商品列表",
+              tit1: "商品列表",
+              tit2: "商品列表",
+              tit3: "商品列表",
+              tit4: "商品列表",
+            },
+          ]
+        },
+
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+table {
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 100%;
+  thead {
+    tr,
+    th {
+      height: 50px;
+      text-align: center;
+    }
+  }
+}
+td {
+  height: 50px;
+  text-align: center;
+}
+</style>

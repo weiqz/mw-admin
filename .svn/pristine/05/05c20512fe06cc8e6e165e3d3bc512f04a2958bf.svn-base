@@ -1,0 +1,77 @@
+<template>
+  <div v-if="actions.view=='n'&& getUserInfo.user_name!=='admin'">
+        <el-alert title="您无权限浏览此页面信息！" type="warning"> </el-alert>
+  </div>
+  <div v-else>
+            <Combox title="数据列表" ico="ivu-icon ivu-icon-md-list" :isFoot="true">
+            <template v-slot:center>
+                 <el-table ref="filterTable" :data="loginLogData.rows" border :fit="true">
+                        <el-table-column prop="created_time" label="登录时间" ></el-table-column>
+                        <el-table-column prop="created_ip" label="登录IP" ></el-table-column>
+                        <el-table-column prop="area" label="登录地址" ></el-table-column>
+                        <el-table-column prop="browser" label="浏览器"></el-table-column>
+                </el-table>
+            </template>
+            <template v-slot:foot>
+                 <el-pagination
+                    background
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage4"
+                    layout="total, prev, pager, next, jumper"
+                    :total="loginLogData.total">
+                    </el-pagination>
+            </template>
+        </Combox>
+  </div>
+
+</template>
+<script>
+import { getopaLogList } from '../../api/permissions'
+export default {
+  data(){
+    return{
+      currentPage4:1,
+      loginLogData:{},
+      actions:{}
+    }
+  },
+  created(){
+    this.getLoginLog()
+  },
+  computed: {
+      getmid(){
+          return this.$store.getters.mid;
+      },
+      getUserInfo(){
+                return JSON.parse(localStorage.getItem('userinfo'))
+      },
+  },
+  methods:{
+      getLoginLog(){
+        getopaLogList({
+            page:this.currentPage,
+            rows:10,
+            cid:this.getmid,
+            log_type:'login'
+        }).then((res)=>{
+            if(res.code!=='0'){
+                this.$message.error(res.msg)
+            }else{
+                res.data.rows.forEach((item)=>{
+                    item.created_time = this.$formatDate(item.created_time);
+                })
+                this.loginLogData = res.data;
+                this.actions = res.data.actions;
+            }
+        })
+      },
+      handleCurrentChange(val){
+          this.currentPage = val
+          this.getLoginLog()
+      }
+  }
+}
+</script>
+<style lang="less">
+  
+</style>

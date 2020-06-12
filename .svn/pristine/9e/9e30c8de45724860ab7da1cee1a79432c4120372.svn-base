@@ -1,0 +1,57 @@
+<template>
+    <div>
+        <div style="margin:40px 0 40px 100px">
+            <label>栏目名称：</label>
+             <el-select v-model="value" placeholder="请选择栏目">
+                <el-option
+                v-for="item in coloptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.label">
+                </el-option>
+            </el-select>
+        </div>
+        
+    </div>
+</template>
+
+<script>
+import { addColumn } from '../../api/permissions'
+    export default {
+        data (){
+            return {
+                value:'',
+                coloptions:[
+                    {label:'首页',value:'0'},
+                    {label:'商品',value:'1'},
+                    {label:'项目',value:'2'},
+                    {label:'订单',value:'3'},
+                    {label:'库存',value:'4'},
+                    {label:'门店',value:'5'},
+                    {label:'会员',value:'6'},
+                    {label:'促销',value:'7'},
+                    {label:'运营',value:'8'},
+                    {label:'内容',value:'9'},
+                    {label:'统计',value:'10'},
+                    {label:'财务',value:'11'},
+                    {label:'设置',value:'12'},
+                    {label:'权限',value:'13'}
+                ]
+            }
+        },
+        methods:{
+            addRequest (){
+                addColumn({
+                    column_name:this.value,
+                    column_path:'/index'
+                }).then(() => {
+                    this.$emit('uplist');
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+
+</style>

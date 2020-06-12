@@ -1,0 +1,409 @@
+<template>
+  <div>
+    <div>
+      <el-steps :active="2">
+        <el-step title="步骤 1"
+                 icon="el-icon-edit"></el-step>
+        <el-step title="步骤 2"
+                 icon="el-icon-upload"></el-step>
+        <el-step title="步骤 3"
+                 icon="el-icon-picture"></el-step>
+      </el-steps>
+    </div>
+    <div>
+      <el-form :model="ruleForm"
+               :rules="rules"
+               ref="ruleForm"
+               label-width="100px"
+               class="demo-ruleForm">
+        <el-form-item label="商品分类:"
+                      prop="protype">
+          <span>轮胎专区</span>>
+          <span>米其林</span>
+          <span><i class="el-icon-edit"
+               style="color:green"></i>编辑</span>
+        </el-form-item>
+        <el-form-item label="商品名称:"
+                      prop="name" class="qqq">
+          <el-input v-model="ruleForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="商品品牌:"
+                      prop="region">
+          <el-select v-model="ruleForm.region"
+                     placeholder="请选择品牌">
+            <el-option label="区域一"
+                       value="shanghai"></el-option>
+            <el-option label="区域二"
+                       value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="商品描述:"
+                      prop="prodesc">
+          <el-input type="textarea"
+                    v-model="ruleForm.prodesc"></el-input>
+        </el-form-item>
+        <el-form-item label="运费模版:"
+                      prop="freight">
+          <el-select v-model="ruleForm.freight"
+                     placeholder="请选择模板">
+            <el-option label="区域一"
+                       value="shanghai"></el-option>
+            <el-option label="区域二"
+                       value="beijing"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="商品货号:"
+                      prop="articleno" class="qqq">
+          <el-input v-model="ruleForm.articleno"></el-input>
+          <div class="articleno">如果您不输入商品货号，系统将自动生成一个唯一的货号。</div>
+        </el-form-item>
+        <el-form-item label="商品售价:"
+                      prop="proprice" class="qqq">
+          <el-input v-model="ruleForm.proprice"></el-input>
+        </el-form-item>
+        <el-form-item label="采购价:"
+                      prop="purchaseprice" class="qqq">
+          <el-input v-model="ruleForm.purchaseprice"></el-input>
+        </el-form-item>
+        <el-form-item label="商品库存:"
+                      prop="stock" class="qqq">
+          <el-input v-model="ruleForm.stock"></el-input>
+          <div class="articleno">该设置只对单品有效，当商品存在多规格货品时为不可编辑状态，库存数值取决于货品数量</div>
+        </el-form-item>
+        <el-form-item label="库存预警值:"
+                      prop="inventoryalert" class="qqq">
+          <el-input v-model="ruleForm.inventoryalert"></el-input>
+          <div class="articleno">该设置只对单品有效，当商品存在多规格货品时为不可编辑状态，库存数值取决于货品数量</div>
+        </el-form-item>
+        <el-form-item label="计量单位:"
+                      prop="company" class="qqq">
+          <el-input v-model="ruleForm.company"></el-input>
+        </el-form-item>
+        <el-form-item label="商品重量:"
+                      prop="weight" class="qqq">
+          <el-input v-model="ruleForm.weight"></el-input>
+          <el-dropdown split-button
+                       type="white">
+            克
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>克</el-dropdown-item>
+              <el-dropdown-item>两</el-dropdown-item>
+              <el-dropdown-item>斤</el-dropdown-item>
+              <el-dropdown-item>公斤</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-form-item>
+        <el-form-item label="赠送积分:"
+                      prop="integral" class="qqq">
+          <el-input v-model="ruleForm.integral"></el-input>
+          <div class="articleno">购买该商品时赠送消费积分数</div>
+        </el-form-item>
+        <el-form-item label="积分购金额:"
+                      prop="purchaseamount" class="qqq">
+          <el-input v-model="ruleForm.purchaseamount"></el-input>
+          <div class="articleno"> (此处需填写金额)购买该商品时最多可以使用积分的金额</div>
+        </el-form-item>
+        <el-form-item label="商品上架:"
+                      prop="delivery" class="qqq">
+          <el-switch v-model="ruleForm.delivery"></el-switch>
+        </el-form-item>
+        <el-form-item label="商品推荐:"
+                      prop="type">
+          <el-checkbox-group v-model="ruleForm.type">
+            <el-checkbox label="推荐"
+                         name="type"></el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="服务保证:"
+                      prop="service">
+          <el-radio-group v-model="ruleForm.service">
+            <el-radio label="正品保证"></el-radio>
+            <el-radio label="极速退款"></el-radio>
+            <el-radio label="七天无理由退换"></el-radio>
+          </el-radio-group>
+
+        </el-form-item>
+        <el-form-item label="商品关键词:"
+                      prop="keyword" class="qqq">
+          <el-input v-model="ruleForm.keyword"></el-input>
+          <div class="articleno">商品关键词请用空格分隔；有两个功能，一是可以作为站内关键词查询，在前台搜索框输入关键词后，能够搜索到该商品；二是作为搜索引擎收录使用.</div>
+        </el-form-item>
+        <el-form-item label="适配车型:"
+                      prop="model">
+          <table border="1"
+                 cellpadding="0"
+                 cellspacing="0"
+                 style="margin-top:30px">
+            <thead>
+              <tr id="bar_head">
+                <th>品牌</th>
+                <th>车型</th>
+                <th>年款</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="num"
+                         placeholder="请输入品牌"
+                         style="width:120px;"></td>
+                <td><input type="num"
+                         placeholder="请输入车型"
+                         style="width:120px"></td>
+                <td><input type="num"
+                         placeholder="请输入年款"
+                         style="width:120px"></td>
+              </tr>
+            </tbody>
+          </table>
+        </el-form-item>
+        <el-form-item label="里程数范围:"
+                      prop="mileage" class="qqq">
+          <div class="mileage">
+            <el-input v-model="ruleForm.mileage" style="margin-right:10px"></el-input>-
+            <el-input v-model="ruleForm.mileage1" style="margin-left:10px;margin-right:10px"></el-input>
+            <span>KM</span>
+          </div>
+        </el-form-item>
+        <el-form-item label="商品备注:"
+                      prop="remarks">
+          <el-input type="textarea"
+                    v-model="ruleForm.remarks"></el-input>
+        </el-form-item>
+        <el-form-item label="会员价格:"
+                      prop="resource">
+          <el-radio-group v-model="ruleForm.resource">
+            <el-radio label="是"></el-radio>
+            <el-radio label="否"></el-radio>
+          </el-radio-group>
+          <table border="1"
+                 cellpadding="0"
+                 cellspacing="0"
+                 >
+            <thead>
+              <tr id="bar_head">
+                <th>雪豹骑士</th>
+                <th>霜狼骑士</th>
+                <th>玄虎骑士</th>
+                <th>操作</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="num"
+                         placeholder="请输入品牌"
+                         style="width:120px;"></td>
+                <td><input type="num"
+                         placeholder="请输入车型"
+                         style="width:120px"></td>
+                <td><input type="num"
+                         placeholder="请输入年款"
+                         style="width:120px"></td>
+                <td>操作</td>
+              </tr>
+            </tbody>
+          </table>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="resetForm('ruleForm')">上一步，选择商品分类</el-button>
+          <el-button type="primary"
+                     @click="submitForm('ruleForm')">下一步，填写商品属性</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      ruleForm: {
+        protype: '',
+        name: '',
+        region: '',
+        prodesc: '',
+        freight: '',
+        articleno: '',
+        proprice: '',
+        purchaseprice: '',
+        stock: '',
+        inventoryalert: '',
+        company: '',
+        weight: '',
+        integral: '',
+        purchaseamount: '',
+        service: '',
+        keyword: '',
+        model: '',
+        mileage: '',
+        mileage1: '',
+        remarks: '',
+        delivery: false,
+
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      rules: {
+        protype: [
+          { required: true, trigger: 'blur' },
+
+        ],
+        name: [
+          { required: true, message: '请输入商品名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        region: [
+          { required: true, message: '请选择品牌', trigger: 'change' }
+        ],
+        prodesc: [
+          { required: true, message: '请填写商品描述', trigger: 'blur' }
+        ],
+        freight: [
+          { required: true, message: '请选择运费模板', trigger: 'change' }
+        ],
+        articleno: [
+          { required: true, message: '请输入商品货号', trigger: 'blur' },
+
+        ],
+        proprice: [
+          { required: true, message: '请输入商品售价', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        purchaseprice: [
+          { message: '请输入采购价', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        stock: [
+          { required: true, message: '请输入商品库存', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        inventoryalert: [
+          { message: '请输入库存预警值', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        company: [
+          { message: '请输入计量单位', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        weight: [
+          { message: '请输入商品重量', trigger: 'blur' },
+          { min: 0.1, max: 1000, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        integral: [
+          { message: '请输入赠送积分', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+
+        purchaseamount: [
+          { message: '积分购金额', trigger: 'blur' },
+          { min: 0, max: 100, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        type: [
+          { type: 'array', trigger: 'change' }
+        ],
+        service: [
+          { type: '', required: true, message: '请至少选择一个服务保证', trigger: 'change' }
+        ],
+        keyword: [
+          { required: true, message: '请输入活动名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        mileage: [
+          { message: '请输入里程范围', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        mileage1: [
+          { message: '请输入里程范围', trigger: 'blur' },
+          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+        ],
+        remarks: [
+          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        ],
+        resource: [
+          { required: true, message: '请选择活动资源', trigger: 'change' }
+        ],
+
+      }
+    };
+  },
+  methods: {
+    submitForm (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields();
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.articleno {
+  font-size: 12px;
+  color: #999;
+}
+input::-ms-input-placeholder {
+  text-align: center;
+}
+input::-webkit-input-placeholder {
+  text-align: center;
+}
+table {
+  border: 1px solid #ccc;
+  border-width: 1px 0px 0px 1px;
+  thead {
+    tr {
+      th {
+        background-color: #e4e4e4;
+      }
+    }
+  }
+  td,
+  th {
+    text-align: center;
+    width: 160px;
+    border-width: 0px 1px 1px 0px;
+  }
+}
+.qqq{
+  /deep/.el-input{
+    width: 14.3%;
+  }
+}
+/deep/.el-textarea{
+  width: 14.2%;
+}
+/deep/.el-textarea__inner{
+  min-height: 140px;
+}
+.mileage {
+  display: flex;
+}
+input {
+  border: 0; // 去除未选中状态边框
+  outline: none; // 去除选中状态边框
+}
+.el-select .el-input {
+  width: 130px;
+}
+.input-with-select .el-input-group__prepend {
+  background-color: #fff;
+}
+.content {
+  display: flex;
+  justify-content: space-around;
+}
+.el-input-group {
+  width: 70%;
+}
+</style>

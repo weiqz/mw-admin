@@ -1,0 +1,71 @@
+<template>
+  <div class="table_layout"
+       :class="{'isborder':isBorder}">
+    <div class="table_top_head">
+      <h2 class="table-title">
+        <i :class=ico></i>
+        {{ title }}
+      </h2>
+      <div class="table-head-right">
+        <slot name="right"></slot>
+      </div>
+    </div>
+    <div class="table_center">
+      <slot name="center"></slot>
+    </div>
+    <div class="combox_foot"
+         v-if="isFoot">
+      <slot name="foot"></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    title: String,
+    ico: String,
+    isFoot: Boolean,
+    isBorder: Boolean
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.table_layout {
+  margin-bottom: 25px;
+  .combox_foot {
+    background: #f9fafb;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-top: 0;
+    text-align: right;
+    position: relative;
+  }
+}
+div.isborder {
+  .table_center {
+    border: 1px solid #ddd;
+  }
+}
+.table_top_head {
+  background: @backgColor;
+  padding: 15px 25px;
+  border: 1px solid #dedede;
+  border-bottom: 0;
+  h2.table-title {
+    display: inline-block;
+    font-size: 14px;
+    color: #666;
+    font-weight: 400;
+  }
+  .table-head-right {
+    float: right;
+    position: relative;
+    top: -5px;
+    button {
+      margin-right: 10px;
+    }
+  }
+}
+</style>

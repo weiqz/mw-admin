@@ -1,0 +1,142 @@
+<template>
+    <div id="slide_nav">
+        <div class="slide_nav_m">
+            <!-- <h3>系统首页</h3> -->
+            <ul>
+                <li v-for="ite in navs" :key="ite.id">
+                    <h3>{{ ite.column_name }}</h3>
+                    <ul>
+                        <li v-for="item in ite.children" :key="item.id" @click="setModID(item.id)">
+                            <router-link :to=item.column_path>{{ item.column_name }}</router-link>
+                        </li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+import { getColumnLe } from '../api/permissions'
+    export default {
+        data(){
+            return {
+                navs:null,
+                currRoutes:[]
+            }
+        },
+        created (){
+            this.getCurrChild();
+            this.getColumnLeft()
+        },
+        watch:{
+            getcid:function (){
+               // console.log(val)
+                this.getCurrChild();
+                this.getColumnLeft()
+            }
+        },
+        computed:{
+            getcid(){
+                return this.$store.getters.cid
+            },
+            getRoutes (){
+               return this.$router.options.routes
+            }
+        },
+        methods:{
+            setModID (id){
+                this.$store.commit('setmid',id)
+            },
+            getColumnLeft(){
+                getColumnLe({
+                    cid:this.getcid
+                }).then((res)=>{
+                    if(res.code!=='0') return
+                    let list = res.data;
+                    this.mapArr(list,(n) => {
+                        this.currRoutes.forEach((item) => {
+                            if(item.meta){
+                                if(n.column_name===item.meta.title){
+                                    n.column_path = item.path
+                                }
+                            }
+                        })
+                    });
+                    this.navs = list;
+                    console.log(this)
+                   
+                })
+            },
+            getCurrChild(){
+                this.mapArr(this.getRoutes,(n)=>{
+                    //console.log(n.meta)
+                    if(typeof n.meta !== 'undefined' &&n.meta.cid===this.getcid){
+                        this.currRoutes = n.children;
+                        //console.log(n.children)
+                        return
+                    }
+                })
+                
+            },
+            mapArr(arr,fn){
+                arr.forEach((n) => {
+             
+                    fn(n);
+
+                    if(n.children&&n.children.length>0){
+                        this.mapArr(n.children,fn)
+                    }
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+    #slide_nav{
+        .slide_nav_m{
+            h3{
+                background: #f2f2f2;
+                color: #888;
+                padding: 15px 0 16px 40px;
+                font-size: 14px;
+                font-weight: 400;
+                border-bottom: 1px solid #ddd;
+            }
+            ul{
+                li{
+                    a{
+                        color: #333;
+                        padding: 12px 0 12px 40px;
+                        font-size: 12px;
+                        color: #555;
+                        display: block;
+                        border-bottom: 1px solid #ddd;
+                        position: relative;
+                        &:hover{
+                            color:@baseColor;
+                        }
+                        &:before{
+                            content: '';
+                            position: absolute;
+                            top: 19px;
+                            left: 29px;
+                            width: 3px;
+                            height: 3px;
+                            background: #000;
+                        }
+                    }
+                    a.router-link-active{
+                        background: #fff;
+                        color: @baseColor;
+                        &:before{
+                            background: @baseColor;
+                        }
+                    }
+                }
+            }
+        }
+    }
+</style>

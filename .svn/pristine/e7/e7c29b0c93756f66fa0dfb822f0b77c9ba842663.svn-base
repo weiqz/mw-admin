@@ -1,0 +1,186 @@
+<template>
+    <div v-if="actions.view=='n'&& getUserInfo.user_name!=='admin'">
+        <el-alert title="您无权限浏览此页面信息！" type="warning"> </el-alert>
+     </div>
+    <div v-else>
+        <Combox title="筛选查询" ico="ivu-icon ivu-icon-ios-search-strong" :isBorder="true">
+            <template v-slot:right>
+                <a class="sqsx" style=""><i class="el-icon-arrow-up"></i> 收起筛选</a>
+                <el-button plain size="mini" @click="query">查询结果</el-button>
+            </template>
+            <template v-slot:center>
+                <el-form :inline="true" :model="formInline" class="demo-form-inline" style="margin:15px">
+                <el-form-item label="输入搜索">
+                    <el-input v-model="formInline.user" placeholder=""></el-input>
+                </el-form-item>
+                <el-form-item label="所属部门">
+                    <el-select v-model="formInline.dement" placeholder="请选择部门" allow-create filterable>
+                        <el-option label="请选择部门" value=""></el-option>
+                        <el-option v-for="item in department_options" :key="item.id" :label="item.department_name" :value="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                </el-form>
+            </template>
+        </Combox>
+
+        <Combox title="数据列表" ico="ivu-icon ivu-icon-md-list" :isFoot="true">
+            <template v-slot:right>
+                <el-button plain size="mini" @click="addmem" v-if="actions.add==='y'|| getUserInfo.user_name==='admin'">添加</el-button>
+               <el-select v-model="seleValue" placeholder="显示条目" size="mini" style="width:100px">
+                    <el-option
+                    v-for="item in options"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                    </el-option>
+                </el-select>
+            </template>
+            <template v-slot:center>
+                 <el-table ref="filterTable" :data="userData.rows" border :fit="true" v-loading="tableLoad">
+                        <el-table-column prop="user_name" label="成员账号" ></el-table-column>
+                        <el-table-column prop="full_name" label="姓名" ></el-table-column>
+                        <el-table-column prop="email" label="邮箱地址" ></el-table-column>
+                        <el-table-column prop="department_name" label="所属部门" ></el-table-column>
+                        <el-table-column prop="created_time" label="添加时间"></el-table-column>
+                        <el-table-column prop="last_login_time" label="最后登录"></el-table-column>
+                        <el-table-column prop="status" label="是否启用">
+                            <template slot-scope="scope">
+                                <i class="el-icon-check" v-if="scope.row.status === 1"></i>
+                                <i class="el-icon-close" v-else></i>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="actions" label="操作">
+                            <template slot-scope="scope">
+                                <router-link :to="{name:'permSeting',params:{id:scope.row.department_id}}" v-if="actions.setprivilege==='y'|| getUserInfo.user_name==='admin'">权限设置</router-link>
+                                <router-link :to="{name:'addmemmange',params:{userId:scope.row.id}}" v-if="actions.update==='y'|| getUserInfo.user_name==='admin'">编辑</router-link>
+                                <a @click="delet(scope.row.id)" v-if="actions.delete==='y'|| getUserInfo.user_name==='admin'">删除</a>
+                            </template>
+                        </el-table-column>
+                </el-table>
+            </template>
+            <template v-slot:foot>
+                 <el-pagination
+                    background
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    layout="total, prev, pager, next, jumper"
+                    :total="userData.total">
+                    </el-pagination>
+            </template>
+        </Combox>
+           
+    </div>
+</template>
+
+<script>
+import { getUserList } from '../../api/user'
+import { delUser } from '../../api/user'
+import { getdivimange } from '../../api/divimange'
+    export default {
+        data (){
+            return {
+                tableLoad:true,
+                userData:{},
+                seleValue:'',
+                formInline:{
+                    user:'',
+                    dement:''
+                },
+                currentPage:1,
+                title:'添加部门',
+                options:[10,15,20,50],
+                department_options:[],
+                data1: [],
+                actions:{}
+            }
+        },
+        created(){
+            this.getdivimList()
+            this.getUser()
+        },
+        computed: {
+            getmid(){
+                return this.$store.getters.mid;
+            },
+            getUserInfo(){
+                return JSON.parse(localStorage.getItem('userinfo'))
+            },
+        },
+        methods:{
+            getUser(){
+                getUserList({
+                    page:this.currentPage,
+                    rows:this.seleValue,
+                    cid:this.getmid,
+                    full_name:this.formInline.user,
+                    department_id:this.formInline.dement
+                }).then((res)=>{
+                    if(res.code!=='0'){
+                        this.$message.error(res.msg)
+                    }else{
+                        this.tableLoad = false;
+                        res.data.rows.forEach((item)=>{
+                            item.created_time = this.$formatDate(item.created_time);
+                            item.last_login_time = this.$formatDate(item.last_login_time);
+                        })
+                        this.actions = res.data.actions;
+                        this.userData = res.data;
+                    }
+                })
+            },
+            getdivimList(){
+                getdivimange({
+                    type:'select',
+                    cid:this.getmid
+                }).then((res)=>{
+                    if(res.code=='0'){
+                        this.department_options = res.data.rows;
+                    }
+                })
+            },
+            handleSizeChange(val){
+                console.log(val)
+            },
+            handleCurrentChange(val){
+                this.currentPage = val;
+                this.getUser()
+            },
+            delet(id){
+                this.$confirm('确定删除此成员?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(()=>{
+                    delUser({
+                         id
+                    }).then((res)=>{
+                        if(res.code==='0'){
+                            this.$message.success(res.msg)
+                            this.getUser()
+                        }
+                    })
+                })
+
+                
+            },
+            addmem(){
+                this.$store.commit('setisBack',true)
+                this.$router.push('/addmemmange/0')
+            },
+            query(){
+                this.getUser()
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+    div.cell i.el-icon-check{
+        color: @baseColor;
+        font-size: 18px;
+    }
+    div.cell i.el-icon-close{
+        color: rgb(255, 57, 57);
+        font-size: 18px;
+    }
+</style>

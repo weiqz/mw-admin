@@ -1,0 +1,48 @@
+import axios from 'axios'
+import Qs from 'qs'
+import getToken from '../util/getToken'
+import store from '../store/index'
+import router from '../route/index'
+
+const request = axios.create({
+  baseURL: 'http://www.localhost.com',
+  timeout: 5000,
+  transformRequest: [function (data) {
+    data = Qs.stringify(data);
+    return data;
+  }],
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+})
+
+request.interceptors.request.use( //请求拦截
+  (config) => {
+    // if (getToken()){
+    //     config.headers.Authorization = getToken();
+    // }
+    if (!getToken()) {
+      alert('用户失效，请重新登录！');
+      router.push('/login')
+    } else {
+      if (config.url !== '/api/login/check-login') {
+        config.data.token = getToken();
+      }
+      return config
+    }
+
+  }
+)
+
+request.interceptors.response.use( //响应拦截
+  (response) => {
+    let data = response.data;
+    if (data.code === '401') {
+      store.commit('removeToken')
+      router.push('/login')
+    }
+    return data
+  }
+)
+
+export default request

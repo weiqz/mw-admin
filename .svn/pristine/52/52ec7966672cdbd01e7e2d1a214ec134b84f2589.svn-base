@@ -1,0 +1,7 @@
+/* 改变主题色变量 */
+@import '~view-design/src/styles/index.less';
+
+// 下面是要覆盖的变量，例如：
+
+@primary-color: #1abc9c;
+@table-td-hover-bg: #f8f8f8;

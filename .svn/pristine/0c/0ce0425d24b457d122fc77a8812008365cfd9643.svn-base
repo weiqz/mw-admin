@@ -1,0 +1,16 @@
+import req from '../request/request'
+
+export function login(data){
+    return req({
+        url:'api/login/check-login',
+        method:'post',
+        data
+    })
+}
+
+export function logouts(t){
+    return req({
+        url:`api/login/log-out?token=${t}`,
+        method:'get'
+    })
+}

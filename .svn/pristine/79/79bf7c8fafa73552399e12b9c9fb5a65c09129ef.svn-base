@@ -1,0 +1,44 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+
+const state = {
+  mainTitle: '',
+  isBack: false,
+  slideNav:localStorage.getItem('slideNav') ? JSON.parse(localStorage.getItem('slideNav')):[],
+  userinfo:{},
+  token:localStorage.getItem('token') ? localStorage.getItem('token'):'',
+};
+
+const mutations = {
+    setisBack (state,flag) {
+      state.isBack=flag
+    },
+    setMaintitle (state,t) {
+      state.mainTitle=t
+    },
+    setSlidenav (state,arr){
+        state.slideNav = arr;
+        localStorage.setItem('slideNav',JSON.stringify(arr));
+    },
+    saveToken (state,tk){
+      state.token = tk;
+      localStorage.setItem('token',tk);
+      console.log(localStorage.getItem('token'))
+    },
+    removeToken(state){
+      state.token = '';
+      localStorage.setItem('token','');
+    }
+
+};
+
+const store = new Vuex.Store({
+  state,
+  mutations 
+})
+
+export default store
+

@@ -1,0 +1,12 @@
+@baseColor:#1abc9c;
+@backgColor:#f3f3f3;
+.ivu-table-cell a{
+    color:@baseColor;
+    margin-right: 15px;
+}
+.ivu-modal-header{
+    background:@backgColor ;
+}
+.ivu-table th, .ivu-table td{
+    text-align: center;
+}

@@ -1,0 +1,181 @@
+<template>
+    <div>
+        <Combox title="数据列表" ico="ivu-icon ivu-icon-md-list" :isFoot="true">
+            <template v-slot:right>
+                <el-button plain @click="addList" size="mini">添加</el-button>
+               <el-select v-model="seleValue" placeholder="显示条目" @change="handleSizeChange" size="mini" style="width:100px">
+                    <el-option
+                    v-for="item in options"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                    </el-option>
+                </el-select>
+            </template>
+            <template v-slot:center>
+                 <el-table ref="filterTable" :data="memListData.rows" border :fit="true">
+                        <el-table-column prop="department_name" label="部门名称" ></el-table-column>
+                        <el-table-column prop="department_description" label="职能描述" ></el-table-column>
+                        <el-table-column prop="department_number" label="成员数量" >
+                            <template slot-scope="scope">
+                                <router-link :to="{name:'memmange',params:{depa_id:scope.row.id}}">{{ scope.row.department_number }}</router-link>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="created_time" label="添加时间"></el-table-column>
+                        <el-table-column prop="is_valid" label="是否启用">
+                            <template slot-scope="scope">
+                                <el-switch
+                                    v-model="scope.row.is_valid"
+                                    active-color="#13ce66"
+                                    inactive-color="#ff4949">
+                                    </el-switch>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="actions" label="操作">
+                            <template slot-scope="scope">
+                                <router-link :to="{name:'permSeting',params:{id:scope.row.id}}">权限设置</router-link>
+                                <a @click="edit(scope.row)">编辑</a>
+                                <a @click="delet">删除</a>
+                            </template>
+                        </el-table-column>
+                </el-table>
+            </template>
+            <template v-slot:foot>
+                 <el-pagination
+                    background
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage4"
+                    :page-size="seleValue"
+                    layout="total, prev, pager, next, jumper"
+                    :total="memListData.total">
+                    </el-pagination>
+            </template>
+        </Combox>
+
+        <el-dialog
+        :title="title"
+        :visible.sync="showDig"
+        width="30%">
+        <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="80px">
+            <el-form-item label="部门名称" prop="department_name">
+                <el-input v-model="formValidate.department_name"></el-input>
+            </el-form-item>
+            <el-form-item label="部门描述" prop="department_description">
+                <el-input type="textarea" v-model="formValidate.department_description"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="cancel">取 消</el-button>
+            <el-button type="primary" @click="ok">确 定</el-button>
+        </span>
+        </el-dialog>
+
+    </div>
+</template>
+
+<script>
+import { adddivimange } from '../../api/divimange'
+import { getdivimange } from '../../api/divimange'
+import { editdivimange } from '../../api/divimange'
+    export default {
+        data (){
+            return {
+                memListData:{},
+                seleValue:10,
+                department_id:'',
+                showDig:false,
+                title:'添加部门',
+                currentPage4:1,
+                options:[10,15,20,50],
+                formValidate:{
+                    department_name:'',
+                    department_description:''
+                },
+                ruleValidate:{
+                    department_name:[
+                        { required: true, message: '请输入部门名称', trigger: 'blur' }
+                    ],
+                    department_description:[
+                        { required: true, message: '请输入内容', trigger: 'blur' }
+                    ]
+                }
+            }
+        },
+        created (){
+            this.getMemLiat()
+        },
+        methods:{
+            getMemLiat(){
+                getdivimange({
+                    page:this.currentPage4,
+                    rows:this.seleValue,
+                    cid:12,
+                }).then((res)=>{
+                    if(res.code!=='0'){
+                        this.$message.error(res.msg)
+                    }else{
+                        res.data.rows.forEach((item)=>{
+                            item.is_valid = item.is_valid===1
+                        })
+                        this.memListData = res.data;
+                    }
+                })
+            },
+            addList (){
+                this.formValidate.department_name = '';
+                 this.formValidate.department_description = '';
+                 this.title = '添加部门'
+                this.showDig = true;
+            },
+            edit (row){
+                 this.formValidate.department_name = row.department_name;
+                 this.formValidate.department_description = row.department_description;
+                 console.log(row)
+                 this.department_id = row.id;
+                 this.title = '编辑部门'
+                 this.showDig = true;
+            },
+            delet (){
+
+            },
+            ok () {
+                let {department_name,department_description} = this.formValidate;
+                let reqFn = null;
+                this.$refs['formValidate'].validate((valid) => {
+                    if (valid) {
+                        if( this.title==='编辑部门' ){
+                            reqFn= editdivimange({department_name,department_description,id:this.department_id})
+                        }else{
+                            reqFn= adddivimange({department_name,department_description})
+                        }
+                        reqFn.then((res)=>{
+                            if(res.code=='0'){
+                                this.$message({
+                                    type:'success',
+                                    message:res.data
+                                })
+                                this.getMemLiat()
+                            }else{
+                                this.$message.error(res.msg);
+                            }
+                        })    
+                    }
+                })
+            },
+            cancel () {
+              this.showDig = false
+            },
+            handleSizeChange(){
+                this.getMemLiat()
+            },
+            handleCurrentChange(val){
+                this.currentPage4 = val
+                this.getMemLiat()
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+
+</style>

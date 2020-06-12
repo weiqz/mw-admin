@@ -1,0 +1,10 @@
+@baseColor:#1abc9c;
+@backgColor:#f3f3f3;
+
+.el-table th, .el-table td{
+    text-align: center;
+}
+tr.el-table__row .cell a{
+    color:@baseColor;
+    margin-right: 15px;
+}

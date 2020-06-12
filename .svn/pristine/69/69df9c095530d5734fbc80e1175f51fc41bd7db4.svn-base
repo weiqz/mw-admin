@@ -1,0 +1,97 @@
+@baseColor:#1abc9c;
+@backgColor:#f3f3f3;
+
+.el-table th, .el-table td{
+    text-align: center;
+}
+tr.el-table__row .cell a{
+    color:@baseColor;
+    cursor: pointer;
+    margin-right: 15px;
+}
+.sqsx{
+    font-size:12px;
+    color:#666;
+    margin-right:10px;
+    cursor: pointer;
+}
+.bold-font{
+    font-weight: 700;
+}
+table{
+    td{
+        .cell{
+            display: inline;
+            a{
+                color: @baseColor;
+                cursor: pointer;
+                margin-right: 7px;
+                font-size: 13px;
+            }
+        }
+    }
+}
+.el-input {
+  margin-left: -1px;
+  width: 210px;
+}
+ul, 
+li {
+list-style: none;
+}
+
+.el-popover{
+  position: absolute;
+  left: 50% !important;
+  background: #fff !important;
+  width:200px !important;
+  height: 200px;
+  color: #000;
+  line-height: 1.4;
+  text-align: justify;
+  font-size: 14px;
+  box-shadow: none;
+  border: 1px solid #ccc;
+  word-break: break-all;
+  cursor: pointer;
+}
+
+#login{
+    .el-input{
+        margin-bottom: 20px;
+        input.el-input__inner{
+            height: 50px;
+            border: 1px solid #fff;
+            background: rgba(255, 255, 255, 0.57);
+            color: #fff;
+            font-size: 17px;
+            padding-left: 45px;
+            transition: all 0.3s;
+            &:focus{
+                background: none;
+            }
+        }
+        span{
+            i{
+                color: #fff;
+                font-size: 28px;
+                line-height: 50px;
+            }
+        }
+    }
+}
+.userinfo_seting{
+    label.el-form-item__label{
+        width: 130px;
+    }
+    .el-button{
+        margin-left: 130px;
+        width: 260px;
+    }
+    div.el-input{
+        width: 260px;
+    }
+    .el-form-item__error {
+        left: 129px;
+    }
+}

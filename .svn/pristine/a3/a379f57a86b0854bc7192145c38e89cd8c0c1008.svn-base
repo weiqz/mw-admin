@@ -1,0 +1,91 @@
+<template>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'App',
+  data (){
+    return {
+
+    }
+  }
+}
+</script>
+
+<style lang="less">
+
+html,body,a,p,ul,li,h1,h2,h3,h4,h5,h6,img,div,input,form{
+  padding: 0;
+  margin: 0;
+}
+html,body{
+  height: 100%;
+  overflow: hidden;
+}
+a{
+  text-decoration: none;
+}
+i{
+  font-style: normal;
+}
+/*---滚动条默认显示样式--*/
+::-webkit-scrollbar-thumb{
+   
+   height:50px;
+   outline-offset:-2px;
+   outline:#dedede;
+   -webkit-border-radius:4px;
+   background: #ddd;
+}
+ 
+/*---鼠标点击滚动条显示样式--*/
+::-webkit-scrollbar-thumb:hover{
+   
+   height:50px;
+   background: #ccc;
+   -webkit-border-radius:4px;
+}
+ 
+ 
+/*---滚动条大小--*/
+::-webkit-scrollbar{
+   width:8px;
+   height:8px;
+}
+ 
+/*---滚动框背景样式--*/
+::-webkit-scrollbar-track-piece{  
+   -webkit-border-radius:0;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.el-table table.el-table__header tr th{ 
+    background: #f0f3f7;
+}
+.el-dialog__header{
+  background: #f2f2f2;
+}
+.el-table thead {
+    color: #62666f;
+}
+.el-dialog__footer{
+  border-top:1px solid #eee;
+}
+div#login .el-input{
+  width: 100%;
+}
+.table-head-right .el-input{
+  width:100px;
+}
+</style>

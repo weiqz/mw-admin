@@ -1,0 +1,60 @@
+<template>
+    <div class="top_title">
+        <div class="top_t_m">
+            <h2>{{ title }}</h2>
+            <div class="topTitle_r">
+                <el-button v-show="isBack" @click="back" plain size="mini" icon="el-icon-arrow-left">返回</el-button>
+                <el-button plain size="mini" icon="el-icon-search">刷新</el-button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data (){
+            return {
+                
+            }
+        },
+        computed:{
+            title (){
+                return this.$route.meta.title;
+            },
+            isBack (){
+                return this.$store.state.isBack;
+            }
+        },
+        methods:{
+            back (){
+                this.$router.back()
+            }
+        }
+    }
+</script>
+
+<style lang="less" scoped>
+    .top_title{
+        width: 100%;
+        background:#f3f3f3;
+        height: 50px;
+        border-bottom: 1px solid #ddd;
+        .top_t_m{
+            margin: 0 30px;
+        }
+        h2{
+            border-left: 4px solid @baseColor;
+            color:#888;
+            padding-left: 5px;
+            font-weight: 400;
+            font-size: 14px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        .topTitle_r{
+            float: right;
+            position: relative;
+            top: 10px;
+        }
+    }
+</style>
